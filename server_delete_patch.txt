@@ -1,0 +1,26 @@
+// ДОПОЛНИТЕЛЬНЫЙ ФИКС ДЛЯ server.js
+// Если после замены admin.html удаление всё равно отдаёт 404,
+// значит backend удаляет только по id или только по slug.
+// Найди в server.js маршрут app.delete('/api/news/:...', ...) и замени его на этот:
+
+app.delete('/api/news/:key', authMiddleware, (req, res) => {
+  const key = String(req.params.key || '');
+
+  const newsItem = db.news.find(item =>
+    String(item.id) === key ||
+    String(item.slug) === key
+  );
+
+  if (!newsItem) {
+    return res.status(404).json({ error: 'Новость не найдена' });
+  }
+
+  db.news = db.news.filter(item =>
+    String(item.id) !== String(newsItem.id) &&
+    String(item.slug) !== String(newsItem.slug)
+  );
+
+  saveDb();
+
+  return res.json({ ok: true, deleted: newsItem });
+});

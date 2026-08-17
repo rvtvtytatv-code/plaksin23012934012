@@ -1,0 +1,772 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Админ-панель — Вячеслав Плаксин</title>
+  <style>
+:root{
+  --bg:#f7f4f1;
+  --card:#fff;
+  --ink:#07182d;
+  --muted:#66717f;
+  --blue:#0878dc;
+  --blue2:#005eb8;
+  --red:#d92b2b;
+  --green:#16803f;
+  --line:#ddd6cf;
+  --shadow:0 24px 60px rgba(7,24,45,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",Arial,sans-serif}
+button,input,textarea,select{font:inherit}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.wrap{width:min(100% - 42px,1420px);margin:0 auto}
+.login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+.login-card{width:min(100%,480px);padding:36px;border:1px solid var(--line);border-radius:30px;background:#fff;box-shadow:var(--shadow)}
+h1,h2,h3{font-weight:650;letter-spacing:-.045em}
+.login-card h1{margin:0 0 10px;font-size:40px}
+.login-card p,.hint{color:var(--muted);line-height:1.55}
+label{display:block;margin:0 0 8px;font-weight:750}
+input,textarea,select{
+  width:100%;border:1px solid var(--line);border-radius:18px;outline:none;background:#fff;color:var(--ink);
+  padding:15px 18px;transition:.18s ease;
+}
+textarea{resize:vertical;line-height:1.58;min-height:150px}
+textarea.big{min-height:420px}
+input:focus,textarea:focus,select:focus{border-color:rgba(8,120,220,.65);box-shadow:0 0 0 4px rgba(8,120,220,.12)}
+.field{margin:0 0 18px}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border:0;border-radius:999px;
+  background:var(--blue);color:#fff;font-weight:800;cursor:pointer;transition:.18s ease;
+}
+.btn:hover{background:var(--blue2);transform:translateY(-1px)}
+.btn.light{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btn.danger{background:var(--red);color:#fff}
+.btn.small{min-height:38px;padding:0 14px;font-size:14px}
+.status{margin-top:14px;font-weight:750;color:var(--muted)}
+.status.ok{color:var(--green)}
+.status.error{color:var(--red)}
+.app{display:none}
+.top{position:sticky;top:0;z-index:50;background:rgba(247,244,241,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{min-height:92px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:14px 0}
+.brand h1{margin:0;font-size:34px}
+.brand p{margin:6px 0 0;color:var(--muted)}
+.top-actions{display:flex;gap:10px;flex-wrap:wrap}
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0}
+.tab{border:1px solid var(--line);background:#fff;color:var(--muted);border-radius:999px;padding:13px 18px;font-weight:850;cursor:pointer}
+.tab.active{background:var(--ink);border-color:var(--ink);color:#fff}
+.tab-content{display:none}
+.tab-content.active{display:block}
+.grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(380px,.85fr);gap:22px;margin-bottom:52px;align-items:start}
+.panel{background:#fff;border:1px solid var(--line);border-radius:30px;padding:26px;box-shadow:var(--shadow)}
+.panel h2{margin:0 0 18px;font-size:30px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.full{grid-column:1 / -1}
+.editor-help{font-size:14px;color:var(--muted);margin:-8px 0 10px}
+.preview{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.preview img{width:112px;height:78px;object-fit:cover;border-radius:14px;background:#eee}
+.form-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:6px}
+.items{display:grid;gap:12px}
+.item{display:grid;grid-template-columns:112px 1fr;gap:14px;padding:14px;border:1px solid var(--line);border-radius:22px;background:#fff}
+.item-img{width:112px;height:86px;object-fit:cover;border-radius:16px;background:#eee}
+.item-meta{color:var(--muted);font-size:13px;font-weight:750;margin-bottom:5px}
+.item-title{margin:0 0 7px;font-size:20px;line-height:1.08}
+.item-excerpt{color:var(--muted);font-size:14px;line-height:1.45;margin-bottom:10px}
+.item-actions{display:flex;gap:8px;flex-wrap:wrap}
+.badge{display:inline-flex;margin-left:6px;background:#edf5ff;color:var(--blue);border-radius:999px;padding:4px 8px;font-size:12px}
+.empty{padding:20px;border:1px dashed var(--line);border-radius:20px;color:var(--muted)}
+
+.stat-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:18px}
+.stat-card{padding:18px;border:1px solid var(--line);border-radius:22px;background:#fff}
+.stat-card strong{display:block;font-size:34px;letter-spacing:-.05em;line-height:1;color:var(--ink)}
+.stat-card span{display:block;margin-top:8px;color:var(--muted);font-weight:750;line-height:1.35}
+.quote-list{display:grid;gap:10px}
+.quote-row{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:start;padding:14px;border:1px solid var(--line);border-radius:18px;background:#fff}
+.quote-row p{margin:0;color:var(--ink);line-height:1.5}
+.quote-admin-grid{grid-template-columns:minmax(0,1fr) minmax(360px,.75fr)}
+@media(max-width:980px){.stat-grid{grid-template-columns:1fr}.quote-admin-grid{grid-template-columns:1fr}.quote-row{grid-template-columns:1fr}}
+@media(max-width:980px){
+  .wrap{width:min(100% - 24px,1420px)}
+  .nav{align-items:flex-start;flex-direction:column}
+  .grid{grid-template-columns:1fr}
+  .form-grid{grid-template-columns:1fr}
+  .item{grid-template-columns:1fr}
+  .item-img{width:100%;height:180px}
+}
+</style>
+</head>
+<body>
+  <div class="login-screen" id="loginScreen">
+    <form class="login-card" id="loginForm">
+      <h1>Админ-панель</h1>
+      <p>Войдите, чтобы добавлять новости, статьи и смотреть заявки.</p>
+      <div class="field"><label>Логин</label><input name="username" value="admin" required></div>
+      <div class="field"><label>Пароль</label><input type="password" name="password" value="12345678" required></div>
+      <button class="btn" type="submit">Войти</button>
+      <div class="status" id="loginStatus"></div>
+    </form>
+  </div>
+
+  <div class="app" id="app">
+    <header class="top">
+      <div class="wrap nav">
+        <div class="brand">
+          <h1>Админ-панель</h1>
+          <p>Полноценный редактор новостей, статей и заявок.</p>
+        </div>
+        <div class="top-actions">
+          <a class="btn light" href="/" target="_blank">Открыть админку</a>
+          <a class="btn light" href="./news.html" target="_blank">Новости</a>
+          <a class="btn light" href="./articles.html" target="_blank">Статьи</a>
+          <button class="btn danger" id="logoutBtn" type="button">Выйти</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <div class="tabs">
+        <button class="tab active" data-tab="news">Новости</button>
+        <button class="tab" data-tab="articles">Статьи</button>
+        <button class="tab" data-tab="consultations">Заявки</button>
+        <button class="tab" data-tab="downloads">Скачивания методичек</button>
+        <button class="tab" data-tab="quotes">Цитаты</button>
+      </div>
+
+      <section class="tab-content active" id="newsTab">
+        <div class="grid">
+          <div class="panel">
+            <h2 id="newsFormTitle">Новая новость</h2>
+            <form id="newsForm">
+              <input type="hidden" name="oldKey" id="newsOldKey">
+              <div class="form-grid">
+                <div class="field"><label>Дата новости</label><input type="date" name="date" id="newsDate" required></div>
+                <div class="field"><label>Статус</label><select name="status" id="newsStatus"><option value="published">Опубликовано</option><option value="draft">Черновик</option></select></div>
+                <div class="field full"><label>Заголовок</label><input name="title" id="newsTitle" placeholder="Главный заголовок новости" required></div>
+                <div class="field full"><label>Подзаголовок / лид</label><textarea name="lead" id="newsLead" placeholder="Крупный вводный абзац под заголовком"></textarea></div>
+                <div class="field"><label>Рубрика</label><input name="topic" id="newsTopic" placeholder="Например: безопасность, БПЛА, антитеррор"></div>
+                <div class="field"><label>Автор</label><input name="author" id="newsAuthor" placeholder="Например: Вячеслав Плаксин"></div>
+                <div class="field"><label>Источник</label><input name="source" id="newsSource" placeholder="Ссылка или название источника"></div>
+                <div class="field"><label>Теги</label><input name="tags" id="newsTags" placeholder="через запятую"></div>
+                <div class="field full"><label>Короткое описание для карточки</label><textarea name="excerpt" id="newsExcerpt" placeholder="Текст, который будет отображаться в карточке новости"></textarea></div>
+                <div class="field full">
+                  <label>Полный текст новости</label>
+                  <div class="editor-help">Можно писать как полноценную новостную колонку. Абзацы разделяй пустой строкой.</div>
+                  <textarea class="big" name="body" id="newsBody" placeholder="Полный текст новости. Каждый абзац с новой строки."></textarea>
+                </div>
+                <div class="field full"><label>Главная картинка</label><input type="file" name="cover" id="newsCover" accept="image/*"><div class="preview" id="newsCoverPreview"></div></div>
+                <div class="field full"><label>Подпись к главной картинке</label><input name="imageCaption" id="newsImageCaption" placeholder="Подпись под фото, если нужна"></div>
+                <div class="field full"><label>Дополнительные фото</label><input type="file" name="gallery" id="newsGallery" accept="image/*" multiple><div class="preview" id="newsGalleryPreview"></div></div>
+              </div>
+              <div class="form-actions">
+                <button class="btn" id="newsSaveBtn" type="submit">Опубликовать новость</button>
+                <button class="btn light" type="button" id="newsResetBtn">Очистить</button>
+              </div>
+              <div class="status" id="newsFormStatus"></div>
+            </form>
+          </div>
+
+          <div class="panel">
+            <h2>Все новости</h2>
+            <div class="items" id="newsList"><div class="empty">Загружаем новости...</div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="tab-content" id="articlesTab">
+        <div class="grid">
+          <div class="panel">
+            <h2 id="articleFormTitle">Новая статья</h2>
+            <form id="articleForm">
+              <input type="hidden" name="oldKey" id="articleOldKey">
+              <div class="form-grid">
+                <div class="field"><label>Дата статьи</label><input type="date" name="date" id="articleDate" required></div>
+                <div class="field"><label>Статус</label><select name="status" id="articleStatus"><option value="published">Опубликовано</option><option value="draft">Черновик</option></select></div>
+                <div class="field full"><label>Заголовок</label><input name="title" id="articleTitle" placeholder="Главный заголовок статьи" required></div>
+                <div class="field full"><label>Подзаголовок / лид</label><textarea name="lead" id="articleLead" placeholder="Крупный вводный абзац"></textarea></div>
+                <div class="field"><label>Рубрика / издание</label><input name="topic" id="articleTopic" placeholder="Например: печатное издание, журнал"></div>
+                <div class="field"><label>Автор</label><input name="author" id="articleAuthor" placeholder="Автор статьи"></div>
+                <div class="field"><label>Источник</label><input name="source" id="articleSource" placeholder="Ссылка или название источника"></div>
+                <div class="field"><label>Теги</label><input name="tags" id="articleTags" placeholder="через запятую"></div>
+                <div class="field full"><label>Короткое описание для карточки</label><textarea name="excerpt" id="articleExcerpt"></textarea></div>
+                <div class="field full">
+                  <label>Полный текст статьи</label>
+                  <div class="editor-help">Пиши статью полноценными абзацами. Пустая строка создаёт новый абзац.</div>
+                  <textarea class="big" name="body" id="articleBody"></textarea>
+                </div>
+                <div class="field full"><label>Главная картинка</label><input type="file" name="cover" id="articleCover" accept="image/*"><div class="preview" id="articleCoverPreview"></div></div>
+                <div class="field full"><label>Подпись к главной картинке</label><input name="imageCaption" id="articleImageCaption"></div>
+                <div class="field full"><label>Дополнительные фото</label><input type="file" name="gallery" id="articleGallery" accept="image/*" multiple><div class="preview" id="articleGalleryPreview"></div></div>
+              </div>
+              <div class="form-actions">
+                <button class="btn" id="articleSaveBtn" type="submit">Опубликовать статью</button>
+                <button class="btn light" type="button" id="articleResetBtn">Очистить</button>
+              </div>
+              <div class="status" id="articleFormStatus"></div>
+            </form>
+          </div>
+
+          <div class="panel">
+            <h2>Все статьи</h2>
+            <div class="items" id="articlesList"><div class="empty">Загружаем статьи...</div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="tab-content" id="consultationsTab">
+        <div class="panel" style="margin-bottom:52px">
+          <h2>Заявки на консультацию</h2>
+          <div class="items" id="consultationsList"><div class="empty">Загружаем заявки...</div></div>
+        </div>
+      </section>
+
+      <section class="tab-content" id="downloadsTab">
+        <div class="panel" style="margin-bottom:52px">
+          <h2>Скачивания методичек</h2>
+          <div class="stat-grid" id="downloadsStats">
+            <div class="empty">Загружаем счётчики...</div>
+          </div>
+          <button class="btn light" type="button" id="refreshDownloadsBtn">Обновить счётчики</button>
+          <div class="status" id="downloadsStatus"></div>
+        </div>
+      </section>
+
+      <section class="tab-content" id="quotesTab">
+        <div class="grid quote-admin-grid">
+          <div class="panel">
+            <h2>Редактор цитат</h2>
+            <div class="editor-help">Каждая цитата с новой строки. Эти цитаты выводятся на главном экране сайта.</div>
+            <textarea class="big" id="quotesText" placeholder="Введите цитаты, каждая с новой строки"></textarea>
+            <div class="form-actions">
+              <button class="btn" type="button" id="saveQuotesBtn">Сохранить цитаты</button>
+              <button class="btn light" type="button" id="reloadQuotesBtn">Обновить</button>
+            </div>
+            <div class="status" id="quotesStatus"></div>
+          </div>
+
+          <div class="panel">
+            <h2>Текущие цитаты</h2>
+            <div class="quote-list" id="quotesList"><div class="empty">Загружаем цитаты...</div></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const CURRENT_BACKEND = "https://bedding-postcard-implies-measuring.trycloudflare.com";
+    const API_BASE = CURRENT_BACKEND;
+    const API_HEADERS = {};
+
+const tokenKey = "plaksin_admin_token";
+    let token = localStorage.getItem(tokenKey) || "";
+    console.log("Admin API_BASE:", API_BASE);
+    let currentTab = "news";
+    let allNews = [];
+    let allArticles = [];
+    let allQuotes = [];
+
+    const $ = id => document.getElementById(id);
+
+    function escapeHtml(s){
+      return String(s || "").replace(/[&<>"']/g, m => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+    }
+
+    function image(src){
+      if(!src) return "";
+      const value = String(src);
+      if(value.startsWith("http")) return value;
+      if(value.startsWith("/uploads/")) return API_BASE + value;
+      if(value.startsWith("uploads/")) return API_BASE + "/" + value;
+      if(value.startsWith("/")) return API_BASE + value;
+      return value;
+    }
+
+    function fmtDate(d){
+      if(!d) return "";
+      const date = new Date(d);
+      return isNaN(date) ? d : date.toLocaleDateString("ru-RU");
+    }
+
+    function today(){
+      return new Date().toISOString().slice(0,10);
+    }
+
+    function setStatus(el, text, type = ""){
+      el.className = "status " + type;
+      el.textContent = text || "";
+    }
+
+    function headers(extra = {}){
+      return {
+        ...API_HEADERS,
+        ...extra
+      };
+    }
+
+    async function api(path, options = {}){
+      const finalOptions = {
+        ...options,
+        headers:{
+          ...API_HEADERS,
+          ...(token ? {Authorization:"Bearer " + token} : {}),
+          ...(options.headers || {})
+        }
+      };
+
+      const res = await fetch(API_BASE + path, finalOptions);
+      const type = res.headers.get("content-type") || "";
+      const data = type.includes("application/json") ? await res.json() : await res.text();
+
+      if(!res.ok){
+        const message = typeof data === "object" ? (data.error || data.message || "Ошибка запроса") : data;
+        throw new Error(message);
+      }
+
+      return data;
+    }
+
+    function showLogin(){
+      $("loginScreen").style.display = "flex";
+      $("app").style.display = "none";
+    }
+
+    function showApp(){
+      $("loginScreen").style.display = "none";
+      $("app").style.display = "block";
+      $("newsDate").value = $("newsDate").value || today();
+      $("articleDate").value = $("articleDate").value || today();
+      loadNews();
+      loadArticles();
+      loadConsultations();
+      loadMethodDownloads();
+      loadQuotes();
+    }
+
+    function preview(input, box){
+      box.innerHTML = "";
+      Array.from(input.files || []).forEach(file => {
+        const img = document.createElement("img");
+        img.src = URL.createObjectURL(file);
+        img.onload = () => URL.revokeObjectURL(img.src);
+        box.appendChild(img);
+      });
+    }
+
+    function detailUrl(item, type){
+      const key = encodeURIComponent(item.slug || item.id || "");
+      return type === "article" ? `./articles.html?slug=${key}` : `./news.html?slug=${key}`;
+    }
+
+    function fillForm(prefix, item){
+      $(`${prefix}OldKey`).value = item.id || item.slug || "";
+      $(`${prefix}Date`).value = item.date ? new Date(item.date).toISOString().slice(0,10) : today();
+      $(`${prefix}Title`).value = item.title || "";
+      $(`${prefix}Lead`).value = item.lead || item.subtitle || "";
+      $(`${prefix}Topic`).value = item.topic || "";
+      $(`${prefix}Author`).value = item.author || "";
+      $(`${prefix}Source`).value = item.source || "";
+      $(`${prefix}Tags`).value = item.tags || "";
+      $(`${prefix}Excerpt`).value = item.excerpt || "";
+      $(`${prefix}Body`).value = item.body || "";
+      $(`${prefix}ImageCaption`).value = item.imageCaption || "";
+      $(`${prefix}Status`).value = item.status || "published";
+      $(`${prefix}CoverPreview`).innerHTML = item.cover ? `<img src="${image(item.cover)}" alt="">` : "";
+      $(`${prefix}GalleryPreview`).innerHTML = (item.gallery || []).map(src => `<img src="${image(src)}" alt="">`).join("");
+      window.scrollTo({top:0, behavior:"smooth"});
+    }
+
+    function resetForm(prefix, title, btnText){
+      $(`${prefix}Form`).reset();
+      $(`${prefix}OldKey`).value = "";
+      $(`${prefix}Date`).value = today();
+      $(`${prefix}CoverPreview`).innerHTML = "";
+      $(`${prefix}GalleryPreview`).innerHTML = "";
+      $(`${prefix}FormTitle`).textContent = title;
+      $(`${prefix}SaveBtn`).textContent = btnText;
+      setStatus($(`${prefix}FormStatus`), "");
+    }
+
+    function itemTemplate(item, type){
+      return `
+        <article class="item">
+          ${item.cover ? `<img class="item-img" src="${image(item.cover)}" alt="">` : `<div class="item-img"></div>`}
+          <div>
+            <div class="item-meta">
+              ${fmtDate(item.date)} · ${escapeHtml(item.topic || (type === "article" ? "Статья" : "Новость"))}
+              <span class="badge">${item.status === "draft" ? "Черновик" : "Опубликовано"}</span>
+            </div>
+            <h3 class="item-title">${escapeHtml(item.title || "Без названия")}</h3>
+            <div class="item-excerpt">${escapeHtml(item.excerpt || item.lead || String(item.body || "").slice(0,140))}</div>
+            <div class="item-actions">
+              <a class="btn light small" href="${detailUrl(item, type)}" target="_blank">Открыть</a>
+              <button class="btn light small" type="button" onclick="${type === "article" ? "editArticle" : "editNews"}('${item.id || item.slug}')">Редактировать</button>
+              <button class="btn danger small" type="button" onclick="${type === "article" ? "deleteArticle" : "deleteNews"}('${item.id || item.slug}')">Удалить</button>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    async function loadNews(){
+      try{
+        allNews = await api("/api/news");
+        $("newsList").innerHTML = allNews.length ? allNews.map(item => itemTemplate(item, "news")).join("") : '<div class="empty">Пока нет новостей.</div>';
+      }catch(err){
+        $("newsList").innerHTML = `<div class="empty">Ошибка загрузки: ${escapeHtml(err.message)}</div>`;
+      }
+    }
+
+    async function loadArticles(){
+      try{
+        allArticles = await api("/api/articles");
+        $("articlesList").innerHTML = allArticles.length ? allArticles.map(item => itemTemplate(item, "article")).join("") : '<div class="empty">Пока нет статей.</div>';
+      }catch(err){
+        $("articlesList").innerHTML = `<div class="empty">Ошибка загрузки статей: ${escapeHtml(err.message)}</div>`;
+      }
+    }
+
+    async function loadConsultations(){
+      try{
+        const items = await api("/api/consultations");
+        $("consultationsList").innerHTML = items.length ? items.map(c => `
+          <article class="item" style="grid-template-columns:1fr">
+            <div>
+              <div class="item-meta">${fmtDate(c.createdAt || c.date)} · ${escapeHtml(c.format || "Формат не указан")}</div>
+              <h3 class="item-title">${escapeHtml(c.name || "Без имени")}</h3>
+              <div class="item-excerpt">
+                <b>Способ связи:</b> ${escapeHtml(c.contactMethod || "")}<br>
+                <b>Контакт:</b> ${escapeHtml(c.contact || "")}<br>
+                <b>Компания:</b> ${escapeHtml(c.company || "")}<br>
+                <b>Согласие на ПДн:</b> ${c.personalDataConsent ? "Да" : "Нет"}<br>
+                ${escapeHtml(c.message || "")}
+              </div>
+            </div>
+          </article>
+        `).join("") : '<div class="empty">Заявок пока нет.</div>';
+      }catch(err){
+        $("consultationsList").innerHTML = `<div class="empty">Ошибка загрузки заявок: ${escapeHtml(err.message)}</div>`;
+      }
+    }
+
+    function renderDownloads(data){
+      const downloads = data && data.downloads ? data.downloads : {};
+      const labels = data && data.labels ? data.labels : {};
+      const terror = Number(downloads.terror || 0);
+      const bpla = Number(downloads.bpla || 0);
+      const total = Number(data && data.total != null ? data.total : terror + bpla);
+      $("downloadsStats").innerHTML = `
+        <div class="stat-card"><strong>${terror}</strong><span>${escapeHtml(labels.terror || "Антитеррор")}</span></div>
+        <div class="stat-card"><strong>${bpla}</strong><span>${escapeHtml(labels.bpla || "Защита от БПЛА")}</span></div>
+        <div class="stat-card"><strong>${total}</strong><span>Всего скачиваний</span></div>
+      `;
+    }
+
+    async function loadMethodDownloads(){
+      const box = $("downloadsStats");
+      if(!box) return;
+      try{
+        const data = await api("/api/method-downloads");
+        renderDownloads(data);
+        setStatus($("downloadsStatus"), "Счётчики обновлены", "ok");
+      }catch(err){
+        box.innerHTML = `<div class="empty">Ошибка загрузки счётчиков: ${escapeHtml(err.message)}</div>`;
+        setStatus($("downloadsStatus"), err.message || "Ошибка загрузки", "error");
+      }
+    }
+
+    function renderQuotes(){
+      const list = $("quotesList");
+      if(!list) return;
+      list.innerHTML = allQuotes.length ? allQuotes.map((quote, index) => `
+        <div class="quote-row">
+          <p>${escapeHtml(quote)}</p>
+          <button class="btn danger small" type="button" onclick="deleteQuote(${index})">Удалить</button>
+        </div>
+      `).join("") : '<div class="empty">Цитат пока нет.</div>';
+    }
+
+    async function loadQuotes(){
+      const text = $("quotesText");
+      if(!text) return;
+      try{
+        allQuotes = await api("/api/quotes");
+        if(!Array.isArray(allQuotes)) allQuotes = [];
+        text.value = allQuotes.join("\n");
+        renderQuotes();
+        setStatus($("quotesStatus"), "Цитаты загружены", "ok");
+      }catch(err){
+        setStatus($("quotesStatus"), err.message || "Ошибка загрузки цитат", "error");
+        $("quotesList").innerHTML = `<div class="empty">Ошибка загрузки цитат: ${escapeHtml(err.message)}</div>`;
+      }
+    }
+
+    async function saveQuotes(){
+      const text = $("quotesText");
+      const saveBtn = $("saveQuotesBtn");
+      const quotes = String(text.value || "").split("\n").map(x => x.trim()).filter(Boolean);
+      if(!quotes.length){
+        setStatus($("quotesStatus"), "Добавьте хотя бы одну цитату", "error");
+        return;
+      }
+      saveBtn.disabled = true;
+      setStatus($("quotesStatus"), "Сохраняем цитаты...");
+      try{
+        const data = await api("/api/quotes", {
+          method:"PUT",
+          headers:{"Content-Type":"application/json", ...API_HEADERS},
+          body:JSON.stringify({quotes})
+        });
+        allQuotes = data.quotes || quotes;
+        text.value = allQuotes.join("\n");
+        renderQuotes();
+        setStatus($("quotesStatus"), "Цитаты сохранены", "ok");
+      }catch(err){
+        setStatus($("quotesStatus"), err.message || "Ошибка сохранения цитат", "error");
+      }finally{
+        saveBtn.disabled = false;
+      }
+    }
+
+    window.deleteQuote = async function(index){
+      if(!confirm("Удалить эту цитату?")) return;
+      try{
+        const data = await api("/api/quotes/" + encodeURIComponent(index), { method:"DELETE" });
+        allQuotes = data.quotes || [];
+        $("quotesText").value = allQuotes.join("\n");
+        renderQuotes();
+        setStatus($("quotesStatus"), "Цитата удалена", "ok");
+      }catch(err){
+        setStatus($("quotesStatus"), err.message || "Ошибка удаления цитаты", "error");
+      }
+    };
+
+
+    async function compressImageFile(file, maxSize = 1600, quality = 0.82){
+      if(!file || !file.type || !file.type.startsWith("image/")) return file;
+
+      if(file.size <= 1200 * 1024) return file;
+
+      return new Promise(resolve => {
+        const img = new Image();
+        const url = URL.createObjectURL(file);
+
+        img.onload = () => {
+          URL.revokeObjectURL(url);
+
+          let width = img.width;
+          let height = img.height;
+
+          if(width > height && width > maxSize){
+            height = Math.round(height * (maxSize / width));
+            width = maxSize;
+          }else if(height >= width && height > maxSize){
+            width = Math.round(width * (maxSize / height));
+            height = maxSize;
+          }
+
+          const canvas = document.createElement("canvas");
+          canvas.width = width;
+          canvas.height = height;
+
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, width, height);
+
+          canvas.toBlob(blob => {
+            if(!blob){
+              resolve(file);
+              return;
+            }
+
+            const safeName = String(file.name || "image.jpg").replace(/\.[^.]+$/, "") + ".jpg";
+            resolve(new File([blob], safeName, { type:"image/jpeg", lastModified:Date.now() }));
+          }, "image/jpeg", quality);
+        };
+
+        img.onerror = () => {
+          URL.revokeObjectURL(url);
+          resolve(file);
+        };
+
+        img.src = url;
+      });
+    }
+
+    async function buildOptimizedFormData(form, type){
+      const source = new FormData(form);
+      const fd = new FormData();
+
+      for(const [key, value] of source.entries()){
+        if(key === "oldKey") continue;
+        if(key === "cover" || key === "gallery") continue;
+        fd.append(key, value);
+      }
+
+      fd.set("type", type);
+      fd.set("kind", type);
+      fd.set("section", type === "article" ? "articles" : "news");
+
+      const coverInput = form.querySelector('input[name="cover"]');
+      if(coverInput && coverInput.files && coverInput.files[0]){
+        const optimizedCover = await compressImageFile(coverInput.files[0], 1800, 0.84);
+        fd.append("cover", optimizedCover);
+      }
+
+      const galleryInput = form.querySelector('input[name="gallery"]');
+      if(galleryInput && galleryInput.files && galleryInput.files.length){
+        for(const file of Array.from(galleryInput.files)){
+          const optimized = await compressImageFile(file, 1600, 0.80);
+          fd.append("gallery", optimized);
+        }
+      }
+
+      return fd;
+    }
+
+
+    async function saveContent(prefix, endpoint, type){
+      const form = $(`${prefix}Form`);
+      const oldKey = $(`${prefix}OldKey`).value;
+      const statusEl = $(`${prefix}FormStatus`);
+      const saveBtn = $(`${prefix}SaveBtn`);
+
+      setStatus(statusEl, "Сохраняем...");
+      saveBtn.disabled = true;
+
+      try{
+        const fd = await buildOptimizedFormData(form, type);
+
+        const method = oldKey ? "PUT" : "POST";
+        const path = oldKey ? endpoint + "/" + encodeURIComponent(oldKey) : endpoint;
+
+        await api(path, {
+          method,
+          body:fd
+        });
+
+        setStatus(statusEl, "Сохранено", "ok");
+
+        if(type === "article"){
+          resetForm("article", "Новая статья", "Опубликовать статью");
+          await loadArticles();
+        }else{
+          resetForm("news", "Новая новость", "Опубликовать новость");
+          await loadNews();
+        }
+      }catch(err){
+        setStatus(
+          statusEl,
+          err.message === "Failed to fetch"
+            ? "Не удалось отправить новость. Обновите страницу Ctrl+F5 и проверьте, что открыта актуальная ссылка Cloudflare. Если ошибка повторится, попробуйте сохранить без фото."
+            : (err.message || "Ошибка сохранения"),
+          "error"
+        );
+      }finally{
+        saveBtn.disabled = false;
+      }
+    }
+
+    window.editNews = function(key){
+      const item = allNews.find(x => String(x.id) === String(key) || String(x.slug) === String(key));
+      if(!item) return alert("Новость не найдена");
+      $("newsFormTitle").textContent = "Редактирование новости";
+      $("newsSaveBtn").textContent = "Сохранить изменения";
+      fillForm("news", item);
+    };
+
+    window.editArticle = function(key){
+      const item = allArticles.find(x => String(x.id) === String(key) || String(x.slug) === String(key));
+      if(!item) return alert("Статья не найдена");
+      document.querySelector('[data-tab="articles"]').click();
+      $("articleFormTitle").textContent = "Редактирование статьи";
+      $("articleSaveBtn").textContent = "Сохранить изменения";
+      fillForm("article", item);
+    };
+
+    window.deleteNews = async function(key){
+      if(!confirm("Удалить эту новость?")) return;
+      try{
+        await api("/api/news/" + encodeURIComponent(key), { method:"DELETE" });
+        await loadNews();
+      }catch(err){
+        alert("Не удалось удалить: " + err.message);
+      }
+    };
+
+    window.deleteArticle = async function(key){
+      if(!confirm("Удалить эту статью?")) return;
+      try{
+        await api("/api/articles/" + encodeURIComponent(key), { method:"DELETE" });
+        await loadArticles();
+      }catch(err){
+        alert("Не удалось удалить: " + err.message);
+      }
+    };
+
+    $("loginForm").addEventListener("submit", async e => {
+      e.preventDefault();
+      setStatus($("loginStatus"), "Входим...");
+      try{
+        const data = await api("/api/login", {
+          method:"POST",
+          headers:{"Content-Type":"application/json", ...API_HEADERS},
+          body:JSON.stringify(Object.fromEntries(new FormData(e.target)))
+        });
+        token = data.token || "admin-token";
+        localStorage.setItem(tokenKey, token);
+        setStatus($("loginStatus"), "Готово", "ok");
+        showApp();
+      }catch(err){
+        setStatus($("loginStatus"), err.message || "Ошибка входа", "error");
+      }
+    });
+
+    $("logoutBtn").addEventListener("click", () => {
+      localStorage.removeItem(tokenKey);
+      token = "";
+      showLogin();
+    });
+
+    document.querySelectorAll(".tab").forEach(btn => {
+      btn.addEventListener("click", () => {
+        currentTab = btn.dataset.tab;
+        document.querySelectorAll(".tab").forEach(x => x.classList.remove("active"));
+        document.querySelectorAll(".tab-content").forEach(x => x.classList.remove("active"));
+        btn.classList.add("active");
+        $(`${currentTab}Tab`).classList.add("active");
+        if(currentTab === "news") loadNews();
+        if(currentTab === "articles") loadArticles();
+        if(currentTab === "consultations") loadConsultations();
+        if(currentTab === "downloads") loadMethodDownloads();
+        if(currentTab === "quotes") loadQuotes();
+      });
+    });
+
+    $("newsCover").addEventListener("change", () => preview($("newsCover"), $("newsCoverPreview")));
+    $("newsGallery").addEventListener("change", () => preview($("newsGallery"), $("newsGalleryPreview")));
+    $("articleCover").addEventListener("change", () => preview($("articleCover"), $("articleCoverPreview")));
+    $("articleGallery").addEventListener("change", () => preview($("articleGallery"), $("articleGalleryPreview")));
+
+    $("newsResetBtn").addEventListener("click", () => resetForm("news", "Новая новость", "Опубликовать новость"));
+    $("articleResetBtn").addEventListener("click", () => resetForm("article", "Новая статья", "Опубликовать статью"));
+
+    $("newsForm").addEventListener("submit", e => {
+      e.preventDefault();
+      saveContent("news", "/api/news", "news");
+    });
+
+    $("articleForm").addEventListener("submit", e => {
+      e.preventDefault();
+      saveContent("article", "/api/articles", "article");
+    });
+
+
+    $("refreshDownloadsBtn")?.addEventListener("click", loadMethodDownloads);
+    $("saveQuotesBtn")?.addEventListener("click", saveQuotes);
+    $("reloadQuotesBtn")?.addEventListener("click", loadQuotes);
+
+    if(token) showApp(); else showLogin();
+  </script>
+</body>
+</html>

@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Новости — Вячеслав Плаксин</title>
+  <meta name="description" content="Новости, публикации и материалы Вячеслава Плаксина." />
+  <style>
+:root{
+  --bg:#f7f4f1;
+  --card:#fff;
+  --ink:#07182d;
+  --muted:#657286;
+  --blue:#0878dc;
+  --blue2:#005eb8;
+  --line:#ddd6cf;
+  --shadow:0 26px 70px rgba(7,24,45,.08);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI", Arial, Helvetica, sans-serif;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+button,input,textarea,select{font:inherit}
+.wrap{width:min(100% - 48px,1180px);margin:0 auto}
+.top{position:sticky;top:0;z-index:50;background:rgba(247,244,241,.95);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{height:92px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{font-size:26px;font-weight:900;line-height:1;letter-spacing:-.06em}
+.brand span{display:block;margin-bottom:7px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue)}
+.menu{display:flex;align-items:center;gap:24px;color:#425063;font-weight:700}
+.menu a:hover{color:var(--blue)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 20px;border-radius:999px;border:0;background:var(--blue);color:#fff;font-weight:800;cursor:pointer;transition:.2s}
+.btn:hover{background:var(--blue2);transform:translateY(-1px)}
+.btn.light{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btn.danger{background:#dc2626;color:#fff}
+.hero{padding:80px 0 48px}
+.eyebrow{font-size:13px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin:0 0 14px}
+.page-title{font-size:clamp(46px,8vw,94px);line-height:.9;letter-spacing:-.08em;margin:0 0 24px}
+.page-lead{max-width:760px;color:var(--muted);font-size:20px;line-height:1.65;margin:0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin:24px 0 80px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:32px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;transition:.2s}
+.card:hover{transform:translateY(-3px)}
+.thumb{width:100%;height:250px;object-fit:cover;background:#efe9e3}
+.card-body{padding:24px}
+.meta{display:flex;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:14px;font-weight:700;margin-bottom:12px}
+.tag{display:inline-flex;border-radius:999px;padding:7px 12px;background:#edf5ff;color:var(--blue);font-size:13px;font-weight:900}
+.card h3{font-size:26px;line-height:1.04;letter-spacing:-.05em;margin:0 0 14px}
+.excerpt{color:var(--muted);line-height:1.6;margin:0 0 18px}
+.read{color:var(--blue);font-weight:900}
+.empty{padding:34px;border:1px dashed var(--line);border-radius:28px;color:var(--muted);background:#fff;margin:24px 0 80px}
+.article-shell{padding:56px 0 92px}
+.back{display:inline-flex;margin-bottom:28px;color:var(--blue);font-weight:900}
+.article{max-width:920px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:38px;box-shadow:var(--shadow);overflow:hidden}
+.article-cover{width:100%;max-height:560px;object-fit:cover;background:#efe9e3}
+.article-inner{padding:42px}
+.article .meta{margin-bottom:16px}
+.article h1{font-size:clamp(38px,7vw,74px);line-height:.92;letter-spacing:-.08em;margin:0 0 20px}
+.lead{font-size:24px;line-height:1.45;color:#2c3848;margin:0 0 28px}
+.caption{font-size:14px;color:var(--muted);margin:10px 0 0}
+.content{font-size:20px;line-height:1.75;color:#253246}
+.content p{margin:0 0 22px}
+.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:30px}
+.gallery img{width:100%;height:280px;object-fit:cover;border-radius:24px;background:#efe9e3}
+.footer{padding:40px 0;border-top:1px solid var(--line);color:var(--muted);text-align:center}
+@media(max-width:860px){
+  .wrap{width:min(100% - 24px,1180px)}
+  .nav{height:auto;min-height:76px;align-items:flex-start;flex-direction:column;padding:16px 0}
+  .menu{width:100%;overflow:auto;gap:16px;padding-bottom:4px}
+  .hero{padding:42px 0 24px}
+  .grid{grid-template-columns:1fr;gap:16px;margin-bottom:48px}
+  .thumb{height:220px}
+  .article-shell{padding:28px 0 54px}
+  .article{border-radius:28px}
+  .article-inner{padding:24px}
+  .lead{font-size:20px}
+  .content{font-size:18px}
+  .gallery{grid-template-columns:1fr}
+  .gallery img{height:auto}
+}
+
+
+  /* ===== FINAL FIX: exact visual size like consultation page ===== */
+
+  body,
+  button,
+  input,
+  textarea,
+  select{
+    font-family:"Segoe UI", Arial, Helvetica, sans-serif !important;
+    font-weight:400 !important;
+  }
+
+  .brand,
+  .brand-simple,
+  .menu,
+  .btn,
+  .tag,
+  .read,
+  .meta,
+  .card,
+  .card *,
+  .article,
+  .article *{
+    font-family:"Segoe UI", Arial, Helvetica, sans-serif !important;
+  }
+
+  .brand,
+  .brand-simple{
+    font-size:24px !important;
+    font-weight:700 !important;
+    line-height:1.1 !important;
+    letter-spacing:-.035em !important;
+  }
+
+  .menu{
+    font-size:16px !important;
+    font-weight:600 !important;
+    letter-spacing:-.01em !important;
+  }
+
+  .hero{
+    padding:54px 0 34px !important;
+  }
+
+  .eyebrow{
+    margin:0 0 14px !important;
+    color:#0878dc !important;
+    font-size:30px !important;
+    font-weight:600 !important;
+    line-height:1.15 !important;
+    letter-spacing:-.045em !important;
+    text-transform:none !important;
+  }
+
+  .page-title{
+    max-width:100% !important;
+    margin:0 0 18px !important;
+    color:#07182d !important;
+    font-family:"Segoe UI", Arial, Helvetica, sans-serif !important;
+    font-size:clamp(44px, 4vw, 56px) !important;
+    font-weight:600 !important;
+    line-height:1.04 !important;
+    letter-spacing:-.055em !important;
+  }
+
+  .page-lead{
+    max-width:920px !important;
+    margin:0 !important;
+    color:#657286 !important;
+    font-family:"Segoe UI", Arial, Helvetica, sans-serif !important;
+    font-size:23px !important;
+    font-weight:400 !important;
+    line-height:1.55 !important;
+    letter-spacing:0 !important;
+  }
+
+  .article h1{
+    max-width:100% !important;
+    margin:0 0 18px !important;
+    color:#07182d !important;
+    font-family:"Segoe UI", Arial, Helvetica, sans-serif !important;
+    font-size:clamp(38px, 4.2vw, 58px) !important;
+    font-weight:600 !important;
+    line-height:1.05 !important;
+    letter-spacing:-.055em !important;
+  }
+
+  .lead{
+    color:#2f3a49 !important;
+    font-family:"Segoe UI", Arial, Helvetica, sans-serif !important;
+    font-size:22px !important;
+    font-weight:400 !important;
+    line-height:1.5 !important;
+    letter-spacing:0 !important;
+  }
+
+  .content{
+    color:#253246 !important;
+    font-family:"Segoe UI", Arial, Helvetica, sans-serif !important;
+    font-size:18px !important;
+    font-weight:400 !important;
+    line-height:1.72 !important;
+    letter-spacing:0 !important;
+  }
+
+  .content p{
+    margin:0 0 20px !important;
+  }
+
+  .card h3{
+    font-family:"Segoe UI", Arial, Helvetica, sans-serif !important;
+    font-size:24px !important;
+    font-weight:600 !important;
+    line-height:1.14 !important;
+    letter-spacing:-.035em !important;
+  }
+
+  .excerpt{
+    font-family:"Segoe UI", Arial, Helvetica, sans-serif !important;
+    font-size:16px !important;
+    font-weight:400 !important;
+    line-height:1.58 !important;
+    letter-spacing:0 !important;
+  }
+
+  @media(max-width:720px){
+    .hero{
+      padding:38px 0 24px !important;
+    }
+
+    .brand,
+    .brand-simple{
+      font-size:21px !important;
+    }
+
+    .menu{
+      font-size:15px !important;
+    }
+
+    .eyebrow{
+      font-size:26px !important;
+      margin-bottom:10px !important;
+    }
+
+    .page-title{
+      font-size:clamp(36px, 10vw, 48px) !important;
+      line-height:1.05 !important;
+      letter-spacing:-.052em !important;
+    }
+
+    .page-lead{
+      font-size:19px !important;
+      line-height:1.55 !important;
+    }
+
+    .article h1{
+      font-size:clamp(30px, 8.6vw, 42px) !important;
+      line-height:1.08 !important;
+      letter-spacing:-.05em !important;
+    }
+
+    .lead{
+      font-size:18px !important;
+      line-height:1.5 !important;
+    }
+
+    .content{
+      font-size:17px !important;
+      line-height:1.68 !important;
+    }
+
+    .card h3{
+      font-size:22px !important;
+    }
+  }
+
+</style>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap nav">
+      <a class="brand brand-simple" href="./index.html">Вячеслав Плаксин</a>
+      <nav class="menu">
+        <a href="./index.html">Главная</a>
+        <a href="./news.html">Новости</a>
+        <a href="./articles.html">Статьи</a>
+        <a href="./consultation.html">Консультации</a>
+        <a href="./about.html">Обо мне</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="app">
+    <section class="hero">
+      <div class="wrap">
+        <p class="eyebrow">Новости</p>
+        <h1 class="page-title">Новости</h1>
+        <p class="page-lead">Новости, публикации и материалы Вячеслава Плаксина.</p>
+      </div>
+    </section>
+    <section class="wrap">
+      <div class="empty">Загружаем...</div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">© Вячеслав Плаксин</div>
+  </footer>
+
+  <script>
+    const CURRENT_BACKEND = "https://bedding-postcard-implies-measuring.trycloudflare.com";
+    const API_BASE = CURRENT_BACKEND;
+    const API_HEADERS = {};
+
+const ENDPOINT = "/api/news";
+    const ROUTE = "news";
+    const DEFAULT_TOPIC = "Новости";
+    const BACK_TEXT = "← Все новости";
+    const app = document.getElementById("app");
+
+    function escapeHtml(s){
+      return String(s || "").replace(/[&<>"']/g, m => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+    }
+
+    function image(src){
+      if(!src) return "";
+      const value = String(src);
+      if(value.startsWith("http")) return value;
+      if(value.startsWith("/uploads/")) return API_BASE + value;
+      if(value.startsWith("uploads/")) return API_BASE + "/" + value;
+      if(value.startsWith("/")) return API_BASE + value;
+      return value;
+    }
+
+    function fmtDate(d){
+      if(!d) return "";
+      const date = new Date(d);
+      return isNaN(date) ? d : date.toLocaleDateString("ru-RU");
+    }
+
+    function textToHtml(text){
+      const safe = escapeHtml(text || "");
+      if(!safe.trim()) return "";
+      return safe
+        .split(/\n\s*\n/g)
+        .map(p => "<p>" + p.replace(/\n/g, "<br>") + "</p>")
+        .join("");
+    }
+
+    function itemKey(item){
+      return item.slug || item.id || "";
+    }
+
+    function detailUrl(item){
+      const key = encodeURIComponent(itemKey(item));
+      const backendMode = location.hostname === "localhost" || location.hostname === "127.0.0.1" || location.hostname.endsWith(".trycloudflare.com");
+      return `./${ROUTE}.html?slug=${key}`;
+    }
+
+    function getKeyFromUrl(){
+      const params = new URLSearchParams(location.search);
+      const direct = params.get("slug") || params.get("id") || params.get("key");
+      if(direct) return direct;
+
+      const parts = location.pathname.split("/").filter(Boolean);
+      const index = parts.indexOf(ROUTE);
+      if(index !== -1 && parts[index + 1]) return decodeURIComponent(parts[index + 1]);
+
+      return "";
+    }
+
+    async function api(path){
+      const res = await fetch(API_BASE + path, { headers: API_HEADERS, cache:"no-store" });
+      const type = res.headers.get("content-type") || "";
+      const data = type.includes("application/json") ? await res.json() : await res.text();
+      if(!res.ok){
+        const message = typeof data === "object" ? (data.error || data.message || "Ошибка запроса") : data;
+        throw new Error(message);
+      }
+      return data;
+    }
+
+    function renderList(items){
+      const published = items.filter(item => item.status !== "draft");
+      app.innerHTML = `
+        <section class="hero">
+          <div class="wrap">
+            <p class="eyebrow">Новости</p>
+            <h1 class="page-title">Новости</h1>
+            <p class="page-lead">Новости, публикации и материалы Вячеслава Плаксина.</p>
+          </div>
+        </section>
+        <section class="wrap">
+          ${published.length ? `
+            <div class="grid">
+              ${published.map(item => `
+                <a class="card" href="${detailUrl(item)}">
+                  ${item.cover ? `<img class="thumb" src="${image(item.cover)}" alt="">` : `<div class="thumb"></div>`}
+                  <div class="card-body">
+                    <div class="meta">
+                      <span>${fmtDate(item.date)}</span>
+                      <span>·</span>
+                      <span>${escapeHtml(item.topic || DEFAULT_TOPIC)}</span>
+                    </div>
+                    <span class="tag">${escapeHtml(item.topic || DEFAULT_TOPIC)}</span>
+                    <h3>${escapeHtml(item.title || "Без названия")}</h3>
+                    <p class="excerpt">${escapeHtml(item.excerpt || item.lead || item.subtitle || String(item.body || "").slice(0, 180))}</p>
+                    <span class="read">Открыть полностью →</span>
+                  </div>
+                </a>
+              `).join("")}
+            </div>
+          ` : `<div class="empty">Пока материалов нет.</div>`}
+        </section>
+      `;
+    }
+
+    function renderDetail(item){
+      const gallery = Array.isArray(item.gallery) ? item.gallery : [];
+      const tags = String(item.tags || "").split(",").map(x => x.trim()).filter(Boolean);
+      const body = item.body || item.excerpt || item.lead || item.subtitle || "";
+
+      document.title = (item.title || "Новости") + " — Вячеслав Плаксин";
+
+      app.innerHTML = `
+        <section class="article-shell">
+          <div class="wrap">
+            <a class="back" href="./news.html">${BACK_TEXT}</a>
+            <article class="article">
+              ${item.cover ? `<img class="article-cover" src="${image(item.cover)}" alt="">` : ""}
+              <div class="article-inner">
+                <div class="meta">
+                  <span>${fmtDate(item.date)}</span>
+                  <span>·</span>
+                  <span>${escapeHtml(item.topic || DEFAULT_TOPIC)}</span>
+                  ${item.author ? `<span>· Автор: ${escapeHtml(item.author)}</span>` : ""}
+                </div>
+                <h1>${escapeHtml(item.title || "Без названия")}</h1>
+                ${item.lead || item.subtitle ? `<p class="lead">${escapeHtml(item.lead || item.subtitle)}</p>` : ""}
+                ${item.imageCaption ? `<p class="caption">${escapeHtml(item.imageCaption)}</p>` : ""}
+                <div class="content">${textToHtml(body)}</div>
+                ${item.source ? `<p class="caption">Источник: ${escapeHtml(item.source)}</p>` : ""}
+                ${tags.length ? `<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:26px">${tags.map(t => `<span class="tag">${escapeHtml(t)}</span>`).join("")}</div>` : ""}
+                ${gallery.length ? `<div class="gallery">${gallery.map(src => `<img src="${image(src)}" alt="">`).join("")}</div>` : ""}
+              </div>
+            </article>
+          </div>
+        </section>
+      `;
+    }
+
+    async function init(){
+      try{
+        const key = getKeyFromUrl();
+
+        if(key){
+          const item = await api(ENDPOINT + "/" + encodeURIComponent(key));
+          renderDetail(item);
+          return;
+        }
+
+        const items = await api(ENDPOINT);
+        renderList(Array.isArray(items) ? items : []);
+      }catch(err){
+        app.innerHTML = `<section class="wrap" style="padding:60px 0"><div class="empty">Ошибка загрузки: ${escapeHtml(err.message)}</div></section>`;
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>

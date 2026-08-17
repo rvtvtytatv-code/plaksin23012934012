@@ -1,0 +1,1009 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <link rel="icon" href="./favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="./favicon.png">
+  <link rel="apple-touch-icon" href="./apple-touch-icon.png">
+
+  <link rel="canonical" href="https://plaksin.pro/consultation.html" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Консультации — Вячеслав Плаксин</title>
+  <meta name="description" content="Форматы консультаций и заявка на консультацию Вячеслава Плаксина." />
+  <style>
+    :root{
+      --bg:#f7f4f1;
+      --card:#ffffff;
+      --ink:#07182d;
+      --muted:#66717f;
+      --blue:#0878dc;
+      --blue2:#005eb8;
+      --line:#ddd6cf;
+      --dark:#07182d;
+      --dark2:#132942;
+      --shadow:0 24px 60px rgba(7,24,45,.08);
+    }
+
+    *{box-sizing:border-box}
+
+    html{scroll-behavior:smooth}
+
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--ink);
+      font-family:"Segoe UI", Arial, Helvetica, sans-serif;
+      font-weight:400;
+      overflow-x:hidden;
+    }
+
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    button,input,textarea,select{font:inherit}
+
+    .wrap{
+      width:min(100% - 48px,1210px);
+      margin:0 auto;
+    }
+
+    .top{
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:rgba(247,244,241,.96);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--line);
+    }
+
+    .nav{
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:24px;
+      min-height:96px;
+      padding:14px 0;
+    }
+
+    .brand{
+      display:block;
+      font-size:26px;
+      font-weight:600;
+      line-height:1;
+      letter-spacing:-.045em;
+    }
+
+    .brand span{
+      display:block;
+      margin-bottom:7px;
+      color:var(--blue);
+      font-size:14px;
+      font-weight:600;
+      line-height:1.1;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+    }
+
+    .menu{
+      display:flex;
+      align-items:center;
+      gap:34px;
+      font-size:16px;
+      font-weight:600;
+      color:#3f4c5e;
+    }
+
+    .menu a{
+      transition:.2s ease;
+    }
+
+    .menu a:hover{
+      color:var(--blue);
+    }
+
+    .burger{
+      display:none;
+      align-items:center;
+      justify-content:center;
+      width:42px;
+      height:42px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:#fff;
+      color:var(--ink);
+      font-size:20px;
+      cursor:pointer;
+    }
+
+    .page-hero{
+      padding:56px 0 36px;
+      border-bottom:1px solid var(--line);
+    }
+
+    .back-link{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      margin-bottom:24px;
+      color:var(--blue);
+      font-size:18px;
+      font-weight:600;
+    }
+
+    .eyebrow{
+      margin-bottom:10px;
+      color:var(--blue);
+      font-size:24px;
+      font-weight:600;
+      line-height:1;
+      letter-spacing:-.03em;
+    }
+
+    .page-title{
+      max-width:100%;
+      margin:0 0 16px;
+      color:var(--ink);
+      font-size:clamp(44px,6vw,82px);
+      font-weight:600;
+      line-height:.96;
+      letter-spacing:-.07em;
+    }
+
+    .page-subtitle{
+      max-width:860px;
+      margin:0;
+      color:var(--muted);
+      font-size:19px;
+      font-weight:400;
+      line-height:1.55;
+    }
+
+    section{
+      padding:48px 0;
+    }
+
+    .consult-grid{
+      display:grid;
+      grid-template-columns:repeat(5,minmax(0,1fr));
+      gap:16px;
+      align-items:stretch;
+    }
+
+    .consult{
+      min-height:270px;
+      padding:26px 20px;
+      display:grid;
+      grid-template-rows:auto 1fr auto;
+      align-items:start;
+      text-align:center;
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:28px;
+      box-shadow:0 14px 34px rgba(7,24,45,.06);
+    }
+
+    .consult h3{
+      min-height:56px;
+      margin:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:var(--ink);
+      font-size:21px;
+      font-weight:500;
+      line-height:1.14;
+      letter-spacing:-.035em;
+    }
+
+    .consult p{
+      margin:16px 0 18px;
+      color:var(--muted);
+      font-size:15.5px;
+      font-weight:400;
+      line-height:1.5;
+    }
+
+    .price{
+      min-height:48px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin:0;
+      color:var(--blue);
+      font-size:16px;
+      font-weight:600;
+      line-height:1.25;
+    }
+
+    .consult-form-box{
+      margin-top:32px;
+      padding:34px;
+      background:var(--dark);
+      color:white;
+      border-radius:32px;
+      box-shadow:var(--shadow);
+    }
+
+    .consult-form-head{
+      margin-bottom:22px;
+    }
+
+    .consult-form-head h2{
+      margin:0 0 12px;
+      color:white;
+      font-size:38px;
+      font-weight:500;
+      line-height:1;
+      letter-spacing:-.055em;
+    }
+
+    .consult-form-head p{
+      margin:0;
+      max-width:980px;
+      color:#c9d8ea;
+      font-size:17px;
+      font-weight:400;
+      line-height:1.55;
+    }
+
+    .consult-form{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:16px;
+    }
+
+    .consult-form .full{
+      grid-column:1/-1;
+    }
+
+    .consult-form input,
+    .consult-form textarea,
+    .consult-form select{
+      width:100%;
+      border:1px solid rgba(255,255,255,.18);
+      border-radius:18px;
+      outline:none;
+      background-color:rgba(255,255,255,.08);
+      color:white;
+      padding:16px 18px;
+      font-weight:400;
+      transition:.18s ease;
+    }
+
+    .consult-form input::placeholder,
+    .consult-form textarea::placeholder{
+      color:rgba(255,255,255,.68);
+    }
+
+    .consult-form input:focus,
+    .consult-form textarea:focus,
+    .consult-form select:focus{
+      border-color:rgba(8,120,220,.75);
+      box-shadow:0 0 0 4px rgba(8,120,220,.18);
+    }
+
+    .consult-form textarea{
+      min-height:150px;
+      resize:vertical;
+      line-height:1.55;
+    }
+
+    .consult-form select{
+      appearance:none;
+      -webkit-appearance:none;
+      -moz-appearance:none;
+      cursor:pointer;
+      background-image:
+        linear-gradient(45deg, transparent 50%, #8ecbff 50%),
+        linear-gradient(135deg, #8ecbff 50%, transparent 50%);
+      background-position:
+        calc(100% - 24px) 50%,
+        calc(100% - 16px) 50%;
+      background-size:8px 8px, 8px 8px;
+      background-repeat:no-repeat;
+      padding-right:54px;
+    }
+
+    .consult-form select option{
+      color:var(--ink);
+      background:#fff;
+      font-weight:400;
+    }
+
+    .submit-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+
+    .btn{
+      min-height:54px;
+      padding:0 24px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border:0;
+      border-radius:18px;
+      background:linear-gradient(135deg,var(--blue),var(--blue2));
+      color:white;
+      font-size:16px;
+      font-weight:500;
+      cursor:pointer;
+      transition:.2s ease;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+      box-shadow:0 16px 34px rgba(8,120,220,.24);
+    }
+
+    .form-note{
+      min-height:24px;
+      color:#9fd8ff;
+      font-size:15px;
+      font-weight:500;
+    }
+
+    .footer{
+      padding:32px 0;
+      border-top:1px solid var(--line);
+      color:var(--muted);
+      font-size:16px;
+      font-weight:400;
+    }
+
+    @media(max-width:1180px){
+      .consult-grid{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+      }
+    }
+
+    @media(max-width:920px){
+      .wrap{
+        width:min(100% - 32px,1210px);
+      }
+
+      .consult-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+
+      .consult-form{
+        grid-template-columns:1fr;
+      }
+
+      .menu{
+        gap:22px;
+        font-size:15px;
+      }
+    }
+
+    @media(max-width:720px){
+      .wrap{
+        width:calc(100% - 24px);
+      }
+
+      .nav{
+        min-height:74px;
+        padding:12px 0;
+      }
+
+      .brand{
+        max-width:250px;
+        font-size:18px;
+        line-height:.96;
+      }
+
+      .brand span{
+        margin-bottom:7px;
+        font-size:10px;
+      }
+
+      .burger{
+        display:flex;
+        flex-shrink:0;
+      }
+
+      .menu{
+        display:none;
+        position:absolute;
+        top:72px;
+        left:0;
+        right:0;
+        z-index:80;
+        flex-direction:column;
+        align-items:flex-start;
+        gap:14px;
+        padding:18px;
+        background:#fff;
+        border:1px solid var(--line);
+        border-radius:22px;
+        box-shadow:0 20px 60px rgba(7,24,45,.14);
+      }
+
+      .menu.open{
+        display:flex;
+      }
+
+      .page-hero{
+        padding:42px 0 26px;
+      }
+
+      .back-link{
+        margin-bottom:18px;
+        font-size:16px;
+      }
+
+      .eyebrow{
+        font-size:18px;
+      }
+
+      .page-title{
+        font-size:clamp(36px,11vw,48px);
+        line-height:1;
+        letter-spacing:-.06em;
+      }
+
+      .page-subtitle{
+        font-size:16px;
+        line-height:1.45;
+      }
+
+      section{
+        padding:34px 0;
+      }
+
+      .consult-grid{
+        grid-template-columns:1fr;
+        gap:12px;
+      }
+
+      .consult{
+        min-height:auto;
+        padding:22px 18px;
+        border-radius:24px;
+      }
+
+      .consult h3{
+        min-height:auto;
+        font-size:21px;
+      }
+
+      .consult p{
+        margin:12px 0 16px;
+      }
+
+      .price{
+        min-height:auto;
+      }
+
+      .consult-form-box{
+        padding:22px;
+        border-radius:26px;
+      }
+
+      .consult-form-head h2{
+        font-size:30px;
+      }
+
+      .submit-row{
+        align-items:flex-start;
+        flex-direction:column;
+      }
+
+      .btn{
+        width:100%;
+      }
+    }
+  
+    /* ===== FIX: менее жирный деловой шрифт ===== */
+    .brand{
+      font-weight:600 !important;
+      letter-spacing:-.035em !important;
+    }
+
+    .brand span{
+      font-weight:600 !important;
+    }
+
+    .eyebrow{
+      font-weight:600 !important;
+    }
+
+    .page-title{
+      font-weight:600 !important;
+      letter-spacing:-.055em !important;
+    }
+
+    .page-subtitle{
+      font-weight:400 !important;
+    }
+
+    .consult h3{
+      font-weight:500 !important;
+    }
+
+    .consult p{
+      font-weight:400 !important;
+    }
+
+    .price{
+      font-weight:600 !important;
+    }
+
+    .consult-form-head h2{
+      font-weight:500 !important;
+    }
+
+    .btn{
+      font-weight:600 !important;
+    }
+
+    .menu{
+      font-weight:500 !important;
+    }
+
+    .back-link{
+      font-weight:500 !important;
+    }
+
+  
+    /* ===== FIX: articles nav + smaller business title ===== */
+    .page-title{
+      font-size:clamp(28px,3.2vw,42px) !important;
+      line-height:1.08 !important;
+      letter-spacing:-.04em !important;
+      font-weight:500 !important;
+      max-width:760px !important;
+    }
+
+    @media(max-width:720px){
+      .page-title{
+        font-size:30px !important;
+        line-height:1.12 !important;
+      }
+
+      .menu a{
+        width:100%;
+      }
+    }
+
+  
+    /* ===== FINAL MOBILE FIX: full site responsive cleanup ===== */
+    html,
+    body{
+      max-width:100% !important;
+      overflow-x:hidden !important;
+    }
+
+    img,
+    video,
+    canvas,
+    svg{
+      max-width:100%;
+    }
+
+    @media(max-width:720px){
+      .wrap{
+        width:calc(100% - 24px) !important;
+      }
+
+      .nav{
+        min-height:82px !important;
+        height:auto !important;
+        padding:10px 0 !important;
+      }
+
+      .brand{
+        max-width:245px !important;
+        font-size:20px !important;
+        line-height:1.05 !important;
+        letter-spacing:-.035em !important;
+      }
+
+      .brand span{
+        font-size:11px !important;
+        line-height:1.15 !important;
+        margin-bottom:6px !important;
+        letter-spacing:.12em !important;
+      }
+
+      .burger{
+        display:flex !important;
+        flex-shrink:0 !important;
+        width:48px !important;
+        height:48px !important;
+        border-radius:17px !important;
+        font-size:24px !important;
+      }
+
+      .menu{
+        display:none !important;
+        position:absolute !important;
+        left:0 !important;
+        right:0 !important;
+        top:74px !important;
+        z-index:120 !important;
+        flex-direction:column !important;
+        align-items:stretch !important;
+        gap:0 !important;
+        padding:10px !important;
+        background:#fff !important;
+        border:1px solid var(--line, #ddd6cf) !important;
+        border-radius:22px !important;
+        box-shadow:0 20px 60px rgba(7,24,45,.16) !important;
+      }
+
+      .menu.open{
+        display:flex !important;
+      }
+
+      .menu a{
+        width:100% !important;
+        padding:14px 12px !important;
+        border-radius:14px !important;
+        font-size:16px !important;
+      }
+
+      .page-hero{
+        padding:36px 0 24px !important;
+      }
+
+      .back-link{
+        font-size:16px !important;
+        margin-bottom:16px !important;
+      }
+
+      .eyebrow{
+        font-size:20px !important;
+        margin-bottom:8px !important;
+      }
+
+      .page-title{
+        font-size:clamp(30px, 9vw, 42px) !important;
+        line-height:1.08 !important;
+        letter-spacing:-.045em !important;
+        max-width:100% !important;
+        overflow-wrap:anywhere !important;
+      }
+
+      .page-subtitle{
+        font-size:16px !important;
+        line-height:1.45 !important;
+        max-width:100% !important;
+      }
+
+      section{
+        padding:34px 0 !important;
+      }
+
+      .news-card,
+      .article-card,
+      .consult,
+      .panel,
+      .card,
+      .item{
+        border-radius:22px !important;
+      }
+
+      .news-card,
+      .article-card{
+        display:grid !important;
+        grid-template-columns:1fr !important;
+        gap:14px !important;
+        padding:14px !important;
+      }
+
+      .thumb,
+      .article-cover,
+      .modal-cover{
+        width:100% !important;
+        height:auto !important;
+        max-height:260px !important;
+        object-fit:cover !important;
+        border-radius:18px !important;
+      }
+
+      .news-title,
+      .article-title,
+      .modal-title{
+        font-size:26px !important;
+        line-height:1.08 !important;
+        letter-spacing:-.04em !important;
+        overflow-wrap:anywhere !important;
+      }
+
+      .excerpt,
+      .article-body,
+      .modal-body{
+        font-size:16px !important;
+        line-height:1.55 !important;
+      }
+
+      .consult-grid{
+        display:grid !important;
+        grid-template-columns:1fr !important;
+        gap:12px !important;
+      }
+
+      .consult{
+        min-height:auto !important;
+        padding:20px 18px !important;
+        text-align:center !important;
+      }
+
+      .consult h3{
+        min-height:auto !important;
+      }
+
+      .consult-form-box{
+        padding:20px !important;
+        border-radius:24px !important;
+      }
+
+      .consult-form{
+        grid-template-columns:1fr !important;
+      }
+
+      .consult-form .full{
+        grid-column:1 !important;
+      }
+
+      .submit-row{
+        flex-direction:column !important;
+        align-items:stretch !important;
+      }
+
+      .btn{
+        width:100% !important;
+      }
+
+      .modal{
+        padding:10px !important;
+      }
+
+      .modal-card{
+        width:100% !important;
+        max-height:88vh !important;
+        padding:18px !important;
+        border-radius:24px !important;
+      }
+
+      .gallery{
+        grid-template-columns:1fr !important;
+      }
+
+      .gallery img{
+        height:auto !important;
+        max-height:260px !important;
+        object-fit:cover !important;
+      }
+
+      .footer{
+        padding:24px 0 !important;
+        font-size:14px !important;
+      }
+    }
+
+    @media(max-width:420px){
+      .wrap{
+        width:calc(100% - 20px) !important;
+      }
+
+      .brand{
+        font-size:19px !important;
+        max-width:220px !important;
+      }
+
+      .brand span{
+        font-size:10px !important;
+      }
+
+      .page-title{
+        font-size:32px !important;
+      }
+    }
+
+
+    /* ===== FINAL FIX: консультации, ценники и согласие на ПДн ===== */
+    body{background:#fff;}
+    .page-hero{padding:46px 0 22px;border-bottom:0;background:#fff;}
+    .back-link,.eyebrow{display:none;}
+    .page-title{margin:0 0 14px;color:#050505;font-size:clamp(36px,4.8vw,58px);font-weight:750;line-height:1.02;letter-spacing:-.055em;}
+    .page-subtitle{max-width:980px;color:#565656;font-size:18px;line-height:1.45;}
+    section{padding:14px 0 50px;background:#fff;}
+    .consult-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:stretch;}
+    .consult{position:relative;min-height:285px;padding:24px 26px;display:flex;flex-direction:column;text-align:left;background:#fff;border:1px solid #e7e7e7;border-radius:14px;box-shadow:none;transition:.2s ease;}
+    .consult:hover{transform:translateY(-2px);box-shadow:0 18px 38px rgba(7,24,45,.08);}
+    .consult.popular{border:2px solid #8ec3f1;padding:23px 25px;}
+    .format-badge{align-self:flex-start;margin:-4px 0 10px;padding:8px 16px;border-radius:8px;background:#d9ecff;color:#396b9f;font-size:15px;font-weight:650;line-height:1;}
+    .consult-icon{width:27px;height:27px;margin:0 0 17px;color:#0b61a8;}
+    .consult-icon svg{width:100%;height:100%;display:block;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+    .consult h3{min-height:0;margin:0 0 8px;display:block;color:#111;font-size:20px;font-weight:650;line-height:1.18;letter-spacing:-.02em;}
+    .consult p{margin:0 0 18px;color:#555;font-size:17px;line-height:1.38;}
+    .price{margin:auto 0 0;min-height:0;display:block;color:#111;font-size:20px;font-weight:750;line-height:1.2;}
+    .price small{display:block;margin-top:4px;color:#858585;font-size:14px;font-weight:450;line-height:1.25;}
+    .consult-form-box{margin-top:42px;padding:24px 24px 0;background:#fff;color:#111;border-radius:0;box-shadow:none;}
+    .consult-form-head{margin-bottom:22px;}
+    .consult-form-head h2{margin:0 0 6px;color:#050505;font-size:34px;font-weight:750;letter-spacing:-.045em;line-height:1.1;}
+    .consult-form-head p{margin:0;color:#565656;font-size:16px;line-height:1.45;}
+    .consult-form{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+    .consult-form input,.consult-form textarea,.consult-form select{width:100%;border:1px solid #e4e4e4;border-radius:7px;background:#fff;color:#111;padding:12px 15px;font-size:20px;outline:none;box-shadow:none;}
+    .consult-form input:focus,.consult-form textarea:focus,.consult-form select:focus{border-color:#8ec3f1;box-shadow:0 0 0 3px rgba(142,195,241,.22);}
+    .consult-form textarea{min-height:100px;resize:vertical;}
+    .consult-form .full{grid-column:1/-1;}
+    .consent{grid-column:1/-1;display:flex;align-items:flex-start;gap:10px;color:#666;font-size:15px;line-height:1.35;}
+    .consent input{width:16px!important;height:16px;margin:2px 0 0;padding:0;flex:0 0 auto;}
+    .consent a{color:#315f91;text-decoration:underline;text-underline-offset:2px;}
+    .submit-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+    .submit-row .btn{border-radius:8px;background:#050505;color:#fff;min-height:43px;padding:0 20px;box-shadow:none;font-size:18px;font-weight:700;}
+    .submit-row .btn:hover{background:#222;transform:none;box-shadow:none;}
+    .form-note{color:#555;font-size:15px;}
+    @media(max-width:980px){.consult-grid{grid-template-columns:1fr 1fr}.consult-form{grid-template-columns:1fr}.consult-form-box{padding:16px 0 0}.consult-form .full,.consent{grid-column:1/-1}}
+    @media(max-width:680px){.consult-grid{grid-template-columns:1fr}.consult{min-height:0}.page-title{font-size:34px}.consult-form input,.consult-form textarea,.consult-form select{font-size:17px}.wrap{width:min(100% - 28px,1210px)}}
+
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap nav">
+      <a class="brand" href="./index.html"><span>Эксперт по безопасности</span>Вячеслав Плаксин</a>
+
+      <nav class="menu" id="menu">
+        <a href="./index.html">Главная</a>
+        <a href="./news.html">Новости</a>
+        <a href="./articles.html">Статьи</a>
+        <a href="./consultation.html">Консультации</a>
+        <a href="./about.html">Обо мне</a>
+        <a href="./index.html#socials">Соцсети</a>
+      </nav>
+
+      <button class="burger" id="burger" aria-label="Открыть меню">☰</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="wrap">
+        <a class="back-link" href="./index.html">← На главную</a>
+        <div class="eyebrow">Консультации</div>
+        <h1 class="page-title">Запись на консультацию</h1>
+        <p class="page-subtitle">Выберите удобный формат работы. После отправки заявки информация попадёт в админ-панель, и с вами можно будет связаться для согласования деталей.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="consult-grid">
+          <article class="consult">
+            <span class="consult-icon"><svg viewBox="0 0 24 24"><path d="M4 5.5A3.5 3.5 0 0 1 7.5 2h9A3.5 3.5 0 0 1 20 5.5v6A3.5 3.5 0 0 1 16.5 15H9l-5 4v-4.5A3.5 3.5 0 0 1 1 11.1V5.5Z"/></svg></span>
+            <h3>Только спросить</h3>
+            <p>Для одного конкретного вопроса — письменный разбор без встречи.</p>
+            <div class="price">5 000 ₽<small>за ответ, до 2 рабочих дней</small></div>
+          </article>
+
+          <article class="consult">
+            <span class="consult-icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="12" height="10" rx="2"/><path d="M15 10l6-3v8l-6-3z"/></svg></span>
+            <h3>Онлайн-консультация</h3>
+            <p>Для живого диалога и уточняющих вопросов — из любого города.</p>
+            <div class="price">5 000 ₽<small>за 30 минут</small></div>
+          </article>
+
+          <article class="consult popular">
+            <div class="format-badge">Популярный формат</div>
+            <span class="consult-icon"><svg viewBox="0 0 24 24"><path d="M8 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="M2 21a6 6 0 0 1 12 0"/><path d="M17 11a3 3 0 1 0 0-6"/><path d="M16 15a5 5 0 0 1 5 5"/></svg></span>
+            <h3>Личная консультация</h3>
+            <p>Очная встреча в Москве. На выходе — письменные рекомендации по объекту.</p>
+            <div class="price">от 25 000 ₽<small>точная цена зависит от задачи</small></div>
+          </article>
+
+          <article class="consult">
+            <span class="consult-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></span>
+            <h3>Стратегическая сессия</h3>
+            <p>Для команды: анализ уязвимостей и план защиты на 1-2 года.</p>
+            <div class="price">от 60 000 ₽<small>от 2 часов, состав команды обсуждается</small></div>
+          </article>
+
+          <article class="consult">
+            <span class="consult-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18M16 14l-3 3-2-2"/></svg></span>
+            <h3>Годовая подписка</h3>
+            <p>Постоянное сопровождение систем безопасности — для служб на объекте.</p>
+            <div class="price">от 300 000 ₽/год<small>объём согласуется индивидуально</small></div>
+          </article>
+        </div>
+
+        <div class="consult-form-box">
+          <div class="consult-form-head">
+            <h2>Оставить заявку</h2>
+            <p>Отвечаю в течение рабочего дня.</p>
+          </div>
+
+          <form class="consult-form" id="consultForm">
+            <input type="text" name="name" placeholder="Ваше имя" required />
+
+            <select name="contactMethod" required>
+              <option value="">Способ связи</option>
+              <option>Телефон</option>
+              <option>Telegram</option>
+              <option>Email</option>
+              <option>WhatsApp</option>
+              <option>MAX</option>
+            </select>
+
+            <input type="text" name="contact" placeholder="Контакт (номер, юзернейм или email)" required />
+
+            <select name="format" required>
+              <option value="">Выберите формат</option>
+              <option>Только спросить</option>
+              <option>Онлайн-консультация</option>
+              <option>Личная консультация</option>
+              <option>Стратегическая сессия</option>
+              <option>Годовая подписка</option>
+            </select>
+
+            <input class="full" type="text" name="company" placeholder="Компания или организация (необязательно)" />
+
+            <textarea class="full" name="message" placeholder="Опишите вопрос или задачу" required></textarea>
+
+            <label class="consent">
+              <input type="checkbox" name="personalDataConsent" value="yes" required />
+              <span>Согласен с обработкой персональных данных согласно <a href="./privacy.html" target="_blank" rel="noopener">политике конфиденциальности</a></span>
+            </label>
+
+            <div class="full submit-row">
+              <button class="btn" type="submit">Записаться на консультацию</button>
+              <div class="form-note" id="formNote"></div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">© <span id="year"></span> Вячеслав Плаксин. Новости, статьи, интервью и консультации.</div>
+  </footer>
+
+  <script>
+    const CURRENT_BACKEND = "https://bedding-postcard-implies-measuring.trycloudflare.com";
+    const API_BASE = CURRENT_BACKEND;
+    const API_HEADERS = {};
+
+const burger = document.getElementById("burger");
+    const menu = document.getElementById("menu");
+    burger?.addEventListener("click", () => menu.classList.toggle("open"));
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const consultForm = document.getElementById("consultForm");
+    const formNote = document.getElementById("formNote");
+
+    consultForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      formNote.textContent = "Отправка...";
+
+      const payload = Object.fromEntries(new FormData(consultForm).entries());
+      payload.personalDataConsent = payload.personalDataConsent === "yes";
+
+      try{
+        const res = await fetch(API_BASE + "/api/consultations", {
+          method:"POST",
+          headers:{
+            "Content-Type":"application/json",
+            ...API_HEADERS
+          },
+          body:JSON.stringify(payload)
+        });
+
+        if(!res.ok) throw new Error("Не удалось отправить заявку");
+
+        consultForm.reset();
+        formNote.textContent = "Заявка отправлена.";
+      }catch(err){
+        formNote.textContent = "Ошибка: " + err.message;
+      }
+    });
+  </script>
+</body>
+</html>
